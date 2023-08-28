@@ -1,9 +1,9 @@
 import {createElement} from '../render.js';
-import {createItemTemplate} from '../template/item-template.js';
+import {createListTemplate} from '../template/list-template.js';
 
-export default class ItemView {
+export default class EventListView {
   getTemplate() {
-    return createItemTemplate();
+    return createListTemplate();
   }
 
   getElement() {
