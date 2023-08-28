@@ -1,31 +1,43 @@
-
-import ListView from '../view/list-view.js';
-import SortView from '../view/sort-view.js';
-import PointView from '../view/point-view.js';
-import PointEditView from '../view/point-edit-view.js';
-// import ItemView from '../view/item-view.js';
 import {render} from '../render.js';
-
+import PointEditView from '../view/point-edit-view.js';
+import PointView from '../view/point-view.js';
+import SortView from '../view/sort-view.js';
+import EventListView from '../view/event-list-view.js';
 export default class BoardPresenter {
   sortComponent = new SortView();
-  eventListComponent = new ListView();
-  pointEditComponent = new PointEditView();
-  pointComponent = new PointView();
-  // itemComponent = new ItemView();
+  eventListComponent = new EventListView();
 
-  constructor({boardContainer}) {
-    this.boardContainer = boardContainer;
+  constructor({container, destinationsModel, offersModel, pointsModel}) {
+    this.container = container;
+    this.destinationsModel = destinationsModel;
+    this.offersModel = offersModel;
+    this.pointsModel = pointsModel;
+
+    this.points = [...pointsModel.get()];
   }
 
   init() {
-    render(this.sortComponent, this.boardContainer);
-    render(this.eventListComponent, this.boardContainer);
-    render(this.pointEditComponent, this.eventListComponent.getElement());
+    render(this.sortComponent, this.container);
+    render(this.eventListComponent, this.container);
 
-    for (let i = 0; i < 5; i++) {
-      // render(new ItemView(), this.eventListComponent.getElement());
-      render(new PointView(), this.eventListComponent.getElement());
-    }
+    render(
+      new PointEditView({
+        // point: this.points[0],
+        pointDestinations: this.destinationsModel.get(), // ???
+        pointOffers: this.offersModel.get(),
+      }),
+      this.eventListComponent.getElement()
+    );
 
+    this.points.forEach((point) => {
+      render(
+        new PointView({
+          point,
+          pointDestinations: this.destinationsModel.getById(point.destination),
+          pointOffers: this.offersModel.getByType(point.type),
+        }),
+        this.eventListComponent.getElement()
+      );
+    });
   }
 }

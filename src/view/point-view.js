@@ -1,9 +1,20 @@
 import {createElement} from '../render.js';
-import {cteatePointTemplate} from '../template/point-template.js';
+import {createPointTemplate} from '../template/point-template.js';
 
 export default class PointView {
+  constructor({point, pointDestinations, pointOffers}) {
+    this.point = point;
+    this.pointDestinations = pointDestinations;
+    this.pointOffers = pointOffers;
+  }
+
   getTemplate() {
-    return cteatePointTemplate();
+    return createPointTemplate({
+      point: this.point,
+      pointDestinations: this.pointDestinations,
+      pointOffers: this.pointOffers
+
+    });
   }
 
   getElement() {
