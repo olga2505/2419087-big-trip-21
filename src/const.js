@@ -27,11 +27,19 @@ const POINT_EMPTY = {
   type: DEFAULT_TYPE,
 };
 
+const EMPTY_TEXT = {
+  everthing: 'Click New Event to create your first point',
+  past: 'There are no past events now',
+  present: 'There are no present events now',
+  future: 'There are no future events now',
+};
+
 export {
   DESTINATION_COUNT,
   OFFER_COUNT,
   POINT_COUNT,
   TYPES,
   DEFAULT_TYPE,
-  POINT_EMPTY
+  POINT_EMPTY,
+  EMPTY_TEXT
 };
