@@ -32,7 +32,7 @@ export default class BoardPresenter {
       return;
     }
 
-    this.#renderPage();
+    this.#renderBoard();
   }
 
   // Отрисовка точек
@@ -78,7 +78,7 @@ export default class BoardPresenter {
   }
 
   // Отрисовка фильтра, соритровки
-  #renderPage() {
+  #renderBoard() {
     this.#eventListComponent = new EventListView();
 
     render(this.#sortComponent, this.#container);

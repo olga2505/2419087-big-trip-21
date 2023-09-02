@@ -1,4 +1,4 @@
-import {formatStringToDateTime, formatStringToShortDate, formatStringToTime, getPointDuration} from '../utils.js';
+import {formatStringToDateTime, formatStringToShortDate, formatStringToTime, getPointDuration} from '../utils/points.js';
 
 function createPointTemplate({point, pointDestinations, pointOffers}) {
   const {basePrice, dateFrom, dateTo, isFavorite, type} = point;

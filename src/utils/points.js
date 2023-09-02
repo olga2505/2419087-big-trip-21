@@ -13,21 +13,6 @@ const HOUR_IN_DAY = 24;
 const MSEC_IN_HOUR = MIN_IN_HOUR * SEC_IN_MIN * MSEC_IN_SEC;
 const MSEC_IN_DAY = HOUR_IN_DAY * MSEC_IN_HOUR;
 
-function getRandomInteger(a = 0, b = 1) {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
-}
-
-function getRandomValue(items) {
-  return items[getRandomInteger(0, items.length - 1)];
-}
-
-function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
 function formatStringToDateTime(date) {
   return dayjs(date).format('YYYY-MM-DDTHH:mm');
 }
@@ -68,9 +53,6 @@ function getScheduleDate(date) {
 }
 
 export {
-  getRandomInteger,
-  getRandomValue,
-  getRandomArrayElement,
   formatStringToDateTime,
   formatStringToShortDate,
   formatStringToTime,

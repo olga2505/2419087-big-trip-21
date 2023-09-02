@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {getRandomInteger} from '../utils';
+import {getRandomInteger} from '../utils/common';
 import {DURATION} from './const';
 
 let date = dayjs().subtract(getRandomInteger(0, DURATION.DAY), 'day').toDate(); // subtract - разница дат. В резудбтате рандомная дата
