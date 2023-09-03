@@ -52,11 +52,29 @@ function getScheduleDate(date) {
   return dayjs(date).format('DD/MM/YY HH:mm');
 }
 
+// прошлые даты
+function isDateBefore(dueDate) {
+  return dueDate && dayjs().isAfter(dueDate, 'D');
+}
+
+// настоящее
+function isDateSame(dueDate) {
+  return dueDate && dayjs().isSame(dueDate, 'D');
+}
+
+// будущие даты
+function isDateAfter(dueDate) {
+  return dueDate && dayjs().isBefore(dueDate, 'D');
+}
+
 export {
   formatStringToDateTime,
   formatStringToShortDate,
   formatStringToTime,
   capitalize,
   getPointDuration,
-  getScheduleDate
+  getScheduleDate,
+  isDateBefore,
+  isDateSame,
+  isDateAfter
 };

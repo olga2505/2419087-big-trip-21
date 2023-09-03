@@ -7,6 +7,7 @@ import MockService from './service/mock-service.js';
 import DestinationsModel from './model/destinations-model.js';
 import OffersModel from './model/offers-model.js';
 import PointsModel from './model/points-model.js';
+import {generateFilter} from './mock/filter.js';
 
 const bodyElement = document.querySelector('body');
 const headerElement = document.querySelector('header');
@@ -28,7 +29,10 @@ const boardPresenter = new BoardPresenter({
   pointsModel,
 });
 
+
+const filters = generateFilter(pointsModel.points);
+
 render(new TripInfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
-render(new FiltersView(), filterWrapper);
+render(new FiltersView({filters}), filterWrapper);
 
 boardPresenter.init();

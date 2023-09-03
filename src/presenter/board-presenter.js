@@ -5,7 +5,7 @@ import PointEditView from '../view/point-edit-view.js';
 import SortView from '../view/sort-view.js';
 import EventListView from '../view/event-list-view.js';
 import ListEmptyView from '../view/list-empty-view.js';
-import {EMPTY_TEXT} from '../const.js';
+import {EmptyText} from '../const.js';
 
 export default class BoardPresenter {
   #container = null;
@@ -23,7 +23,7 @@ export default class BoardPresenter {
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
 
-    this.#points = [...pointsModel.get()];
+    this.#points = [...pointsModel.points];
   }
 
   init() {
@@ -92,7 +92,7 @@ export default class BoardPresenter {
   // когда нет точек маршрута
   #renderEmpty() {
     render(new ListEmptyView({
-      text: EMPTY_TEXT.everthing
+      text: EmptyText.everthing
     }), this.#container);
   }
 }

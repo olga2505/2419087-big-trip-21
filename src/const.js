@@ -27,11 +27,18 @@ const POINT_EMPTY = {
   type: DEFAULT_TYPE,
 };
 
-const EMPTY_TEXT = {
+const EmptyText = {
   everthing: 'Click New Event to create your first point',
   past: 'There are no past events now',
   present: 'There are no present events now',
   future: 'There are no future events now',
+};
+
+const FilterType = {
+  ALL: 'Everything',
+  FUTURE: 'Future',
+  PRESENT: 'Present',
+  PAST: 'Past',
 };
 
 export {
@@ -41,5 +48,6 @@ export {
   TYPES,
   DEFAULT_TYPE,
   POINT_EMPTY,
-  EMPTY_TEXT
+  EmptyText,
+  FilterType
 };
