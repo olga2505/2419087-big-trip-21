@@ -1,11 +1,9 @@
-import {RenderPosition, render, replace} from '../framework/render.js';
-import PointView from '../view/point-view.js';
-import PointEditView from '../view/point-edit-view.js';
+import {RenderPosition, render} from '../framework/render.js';
 import SortView from '../view/sort-view.js';
-import EventListView from '../view/event-list-view.js';
+import PointListView from '../view/point-list-view.js';
 import ListEmptyView from '../view/list-empty-view.js';
 import {EmptyText} from '../const.js';
-// import PointPresenter from './point-presenter.js';
+import PointPresenter from './point-presenter.js';
 
 export default class BoardPresenter {
   #container = null;
@@ -15,7 +13,7 @@ export default class BoardPresenter {
   #points = [];
 
   #sortComponent = new SortView();
-  #eventListComponent = new EventListView();
+  #pointsListContainer = new PointListView();
   #noPointComponent = new ListEmptyView({text: EmptyText.everthing});
 
   constructor({container, destinationsModel, offersModel, pointsModel}) {
@@ -34,48 +32,12 @@ export default class BoardPresenter {
 
   // Отрисовка точек
   #renderPoint(point) {
-    // const pointPresenter = new PointPresenter({
-    //   pointListContainer: this.#eventListComponent.element
-    // });
-    // pointPresenter.init(point);
-    const escKeyDownHandler = (evt) => {
-      if (evt.key === 'Escape') {
-        evt.preventDefault();
-        replaceFormToPoint();
-        document.removeEventListener('keydown', escKeyDownHandler);
-      }
-    };
-
-    const pointComponent = new PointView({
-      point,
-      pointDestinations: this.#destinationsModel.getById(point.destination),
-      pointOffers: this.#offersModel.getByType(point.type),
-      onEditClick: () => {
-        replacePointToForm();
-        document.addEventListener('keydown', escKeyDownHandler);
-      }
+    const pointPresenter = new PointPresenter({
+      pointsListContainer: this.#pointsListContainer.element,
+      destinationsModel: this.#destinationsModel,
+      offersModel: this.#offersModel,
     });
-
-    const pointEditComponent = new PointEditView({
-      pointDestinations: this.#destinationsModel.get(),
-      pointOffers: this.#offersModel.get(),
-      onFormSubmit: () => {
-        replaceFormToPoint();
-      },
-      onFormReset: () => {
-        replaceFormToPoint();
-      }
-    });
-
-    function replacePointToForm () {
-      replace(pointEditComponent, pointComponent);
-    }
-
-    function replaceFormToPoint () {
-      replace(pointComponent, pointEditComponent);
-    }
-
-    render(pointComponent, this.#eventListComponent.element);
+    pointPresenter.init(point);
   }
 
   // Отрисовка всех точек
@@ -91,7 +53,7 @@ export default class BoardPresenter {
   }
 
   #renderBoard() {
-    render(this.#eventListComponent, this.#container);
+    render(this.#pointsListContainer, this.#container);
 
     if (this.#points.length === 0) {
       this.#renderEmpty();

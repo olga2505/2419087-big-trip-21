@@ -1,7 +1,7 @@
 import {render, replace} from '../framework/render.js';
 import PointView from '../view/point-view.js';
 import PointEditView from '../view/point-edit-view.js';
-import EventListView from '../view/event-list-view.js';
+import EventListView from '../view/point-list-view.js';
 import ListEmptyView from '../view/list-empty-view.js';
 import {SortType} from '../const';
 
@@ -11,26 +11,35 @@ export default class PointPresenter {
   #pointEditComponent = null;
   #point = null;
 
-  // #destinationsModel = null;
-  // #offersModel = null;
+  #destinationsModel = null;
+  #offersModel = null;
 
-  constructor({pointsListContainer}) {
+  constructor({pointsListContainer, destinationsModel, offersModel}) {
     this.#pointsListContainer = pointsListContainer;
+    this.#destinationsModel = destinationsModel;
+    this.#offersModel = offersModel;
+    // this.#pointsModel = pointsModel;
   }
 
   init(point) {
+
+
     this.#point = point;
 
     this.#pointComponent = new PointView({
       point: this.#point,
-      // pointDestinations: this.#destinationsModel.getById(point.destination),
-      // pointOffers: this.#offersModel.getByType(point.type),
+      //
+      pointDestinations: this.#destinationsModel.getById(point.destination),
+      pointOffers: this.#offersModel.getByType(point.type),
+      //
       onEditClick: this.#handleEditClick,
     });
 
     this.#pointEditComponent = new PointEditView({
-      // pointDestinations: this.#destinationsModel.get(),
-      // pointOffers: this.#offersModel.get(),
+      //
+      pointDestinations: this.#destinationsModel.get(),
+      pointOffers: this.#offersModel.get(),
+      //
       onFormSubmit: this.#handleFormSubmit,
       onFormReset: this.#handleFormReset,
     });
