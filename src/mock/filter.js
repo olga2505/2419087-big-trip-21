@@ -1,5 +1,6 @@
 import {filter} from '../utils/filter.js';
 
+// результатом этой функции будет массив объектов с ключами type и count
 function generateFilter(tasks) {
   // entries преобразует объект в массив из пар ключ/значение. map - проитерирует массив
   return Object.entries(filter).map(

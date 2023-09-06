@@ -1,11 +1,11 @@
-import {render, replace} from '../framework/render.js';
-// import PointEditView from '../view/point-edit-view.js';
+import {RenderPosition, render, replace} from '../framework/render.js';
 import PointView from '../view/point-view.js';
 import PointEditView from '../view/point-edit-view.js';
 import SortView from '../view/sort-view.js';
 import EventListView from '../view/event-list-view.js';
 import ListEmptyView from '../view/list-empty-view.js';
 import {EmptyText} from '../const.js';
+// import PointPresenter from './point-presenter.js';
 
 export default class BoardPresenter {
   #container = null;
@@ -16,6 +16,7 @@ export default class BoardPresenter {
 
   #sortComponent = new SortView();
   #eventListComponent = new EventListView();
+  #noPointComponent = new ListEmptyView({text: EmptyText.everthing});
 
   constructor({container, destinationsModel, offersModel, pointsModel}) {
     this.#container = container;
@@ -23,20 +24,20 @@ export default class BoardPresenter {
     this.#offersModel = offersModel;
     this.#pointsModel = pointsModel;
 
-    this.#points = [...pointsModel.points];
+    // this.#points = [...#pointsModel.points];
   }
 
   init() {
-    if (this.#points.length === 0) {
-      this.#renderEmpty();
-      return;
-    }
-
+    this.#points = [...this.#pointsModel.points];
     this.#renderBoard();
   }
 
   // Отрисовка точек
   #renderPoint(point) {
+    // const pointPresenter = new PointPresenter({
+    //   pointListContainer: this.#eventListComponent.element
+    // });
+    // pointPresenter.init(point);
     const escKeyDownHandler = (evt) => {
       if (evt.key === 'Escape') {
         evt.preventDefault();
@@ -77,22 +78,32 @@ export default class BoardPresenter {
     render(pointComponent, this.#eventListComponent.element);
   }
 
-  // Отрисовка фильтра, соритровки
-  #renderBoard() {
-    this.#eventListComponent = new EventListView();
-
-    render(this.#sortComponent, this.#container);
-    render(this.#eventListComponent, this.#container);
-
+  // Отрисовка всех точек
+  #renderPoints() {
     this.#points.forEach((point) => {
       this.#renderPoint(point);
     });
   }
 
+  // Отрисовка соритровки
+  #renderSort() {
+    render(this.#sortComponent, this.#container, RenderPosition.AFTERBEGIN);
+  }
+
+  #renderBoard() {
+    render(this.#eventListComponent, this.#container);
+
+    if (this.#points.length === 0) {
+      this.#renderEmpty();
+      return;
+    }
+
+    this.#renderPoints();
+    this.#renderSort();
+  }
+
   // когда нет точек маршрута
   #renderEmpty() {
-    render(new ListEmptyView({
-      text: EmptyText.everthing
-    }), this.#container);
+    render(this.#noPointComponent, this.#container, RenderPosition.AFTERBEGIN);
   }
 }
