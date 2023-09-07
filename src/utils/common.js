@@ -13,8 +13,14 @@ function getRandomArrayElement(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
+function updateItem(items, update) {
+  // итерируемся по массиву, находим нужный элемент по id и применяем update
+  return items.map((item) => item.id === update.id ? update : item);
+}
+
 export {
   getRandomInteger,
   getRandomValue,
   getRandomArrayElement,
+  updateItem,
 };

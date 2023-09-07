@@ -4,6 +4,7 @@ import PointListView from '../view/point-list-view.js';
 import ListEmptyView from '../view/list-empty-view.js';
 import {EmptyText} from '../const.js';
 import PointPresenter from './point-presenter.js';
+import {updateItem} from '../utils/common.js';
 
 export default class BoardPresenter {
   #container = null;
@@ -15,6 +16,8 @@ export default class BoardPresenter {
   #sortComponent = new SortView();
   #pointsListContainer = new PointListView();
   #noPointComponent = new ListEmptyView({text: EmptyText.everthing});
+  // коллекция презенткров
+  #pointPresenters = new Map();
 
   constructor({container, destinationsModel, offersModel, pointsModel}) {
     this.#container = container;
@@ -30,14 +33,32 @@ export default class BoardPresenter {
     this.#renderBoard();
   }
 
+  #handleModeChange = () => {
+    this.#pointPresenters.forEach((presenter) => presenter.resetView());
+  };
+
+  // сюда приходит обновлённая точка
+  #handlePointChange = (updatedPoint) => {
+    // нужно обновить задачу в #points(все точки, копия задач из модели). Находим в массиве нужную задачу и обновляем. updateItem вернёт обновлённый массив
+    this.#points = updateItem(this.#points, updatedPoint);
+    // раз данные обновились, нужно заново инициализировать презентер точки. Находим презентер для обновлённой задачи (вызываем у коллекции метод get и пердаём ей ключ по которому хотим найти). Когда нашли презентер, вызываем метод init в который передаём обновлённые данные
+    this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
+  };
+
   // Отрисовка точек
   #renderPoint(point) {
     const pointPresenter = new PointPresenter({
       pointsListContainer: this.#pointsListContainer.element,
       destinationsModel: this.#destinationsModel,
       offersModel: this.#offersModel,
+      onDataChange: this.#handlePointChange,
+      onModeChange: this.#handleModeChange
     });
     pointPresenter.init(point);
+
+    // сохраняем экземпляр PointPresenter
+    // set - метод коллекции, который позволяет хранить ключ/значение, передаются 2 значения (ключ, само значение) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/set
+    this.#pointPresenters.set(point.id, pointPresenter);
   }
 
   // Отрисовка всех точек
@@ -45,6 +66,12 @@ export default class BoardPresenter {
     this.#points.forEach((point) => {
       this.#renderPoint(point);
     });
+  }
+
+  #clearTaskList() {
+    this.#pointPresenters.forEach((presenter) => presenter.destroy());
+    // clear - встроенный метод Map
+    this.#pointPresenters.clear();
   }
 
   // Отрисовка соритровки
