@@ -41,6 +41,14 @@ const FilterType = {
   PAST: 'Past',
 };
 
+const SortType = {
+  DEFAULT: 'day',
+  EVENT: 'event',
+  TIME: 'time',
+  PRICE: 'price',
+  OFFER: 'offer'
+};
+
 export {
   DESTINATION_COUNT,
   OFFER_COUNT,
@@ -49,5 +57,6 @@ export {
   DEFAULT_TYPE,
   POINT_EMPTY,
   EmptyText,
-  FilterType
+  FilterType,
+  SortType
 };
