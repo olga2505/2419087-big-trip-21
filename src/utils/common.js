@@ -14,7 +14,7 @@ function getRandomArrayElement(items) {
 }
 
 function updateItem(items, update) {
-  // итерируемся по массиву, находим нужный элемент по id и применяем update
+  // итерируемся по массиву, находим нужный элемент по id и вместо него закидываем обновлённый элемент update, если id не совпадает оставляем item (map возвращает новый массив).
   return items.map((item) => item.id === update.id ? update : item);
 }
 

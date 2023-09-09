@@ -3,11 +3,13 @@ import {createSortTemplate} from '../template/sort-template.js';
 
 export default class SortView extends AbstractView {
   #handleSortTypeChange = null;
+  #items = null;
 
-  constructor({onSortTypeChange}) {
+  constructor({items, onSortTypeChange}) {
     super();
+    this.#items = items;
     this.#handleSortTypeChange = onSortTypeChange;
-    this.element.addEventListener('click', this.#sortTypeChangeHandler);
+    this.element.addEventListener('change', this.#sortTypeChangeHandler);
   }
 
   get template() {
@@ -15,11 +17,14 @@ export default class SortView extends AbstractView {
   }
 
   #sortTypeChangeHandler = (evt) => {
-    // tagName всегда прописными буквами
+    evt.preventDefault();
+    // // tagName всегда прописными буквами
     if (evt.target.tagName !== 'INPUT') {
       return;
     }
 
+    // ?. optional changing
+    // this.#handleSortTypeChange?.(evt.target.dataset.item);
     this.#handleSortTypeChange(evt.target.dataset.sortType);
   };
 }

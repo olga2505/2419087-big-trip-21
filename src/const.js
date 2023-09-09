@@ -42,11 +42,24 @@ const FilterType = {
 };
 
 const SortType = {
-  DEFAULT: 'day',
+  DAY: 'day',
   EVENT: 'event',
   TIME: 'time',
   PRICE: 'price',
   OFFER: 'offer'
+};
+
+const enableSortType = {
+  [SortType.DAY]: true,
+  [SortType.EVENT]: false,
+  [SortType.TIME]: true,
+  [SortType.PRICE]: true,
+  [SortType.OFFER]: false,
+};
+
+const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING',
 };
 
 export {
@@ -58,5 +71,7 @@ export {
   POINT_EMPTY,
   EmptyText,
   FilterType,
-  SortType
+  SortType,
+  enableSortType,
+  Mode
 };

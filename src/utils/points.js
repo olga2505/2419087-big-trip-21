@@ -68,12 +68,12 @@ function isDateAfter(dueDate) {
 }
 
 // Сортировка по дате
-// function sortPointDate(pointA, pointB) {
-//   // у dayjs есть метод diff сравнения дат
-//   return dayjs(pointA.dateFrom).diff(dayjs(pointB.dateFrom));
-// }
+function sortPointsDate(pointA, pointB) {
+  // у dayjs есть метод diff сравнения дат
+  return dayjs(pointA.dateFrom).diff(dayjs(pointB.dateFrom));
+}
 
-function sortPointTime(pointA, pointB) {
+function sortPointsTime(pointA, pointB) {
   const durationA = dayjs(pointA.dateTo).diff(dayjs(pointA.dateFrom));
   const durationB = dayjs(pointB.dateTo).diff(dayjs(pointB.dateFrom));
 
@@ -86,10 +86,9 @@ function sortPointTime(pointA, pointB) {
   }
 
   return 0;
-
 }
 
-function sortPointPrice(pointA, pointB) {
+function sortPointsPrice(pointA, pointB) {
   if (pointA.basePrice > pointB.basePrice) {
     return -1;
   }
@@ -112,6 +111,7 @@ export {
   isDateBefore,
   isDateSame,
   isDateAfter,
-  sortPointTime,
-  sortPointPrice
+  sortPointsDate,
+  sortPointsTime,
+  sortPointsPrice
 };
