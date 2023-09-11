@@ -1,14 +1,7 @@
 import {remove, render, replace} from '../framework/render.js';
 import PointView from '../view/point-view.js';
 import PointEditView from '../view/point-edit-view.js';
-// import EventListView from '../view/point-list-view.js';
-// import ListEmptyView from '../view/list-empty-view.js';
-// import {SortType} from '../const';
-
-const Mode = {
-  DEFAULT: 'DEFAULT',
-  EDITING: 'EDITING',
-};
+import {Mode} from '../const.js';
 
 export default class PointPresenter {
   #pointsListContainer = null;
@@ -22,6 +15,9 @@ export default class PointPresenter {
   #offersModel = null;
   #mode = Mode.DEFAULT;
 
+  // пропсы именуются с on...
+  // полученный обработчик (внутренний метод) - с handle..
+  // сам обработчик - элемент-что произошло-Handler
   constructor({pointsListContainer, destinationsModel, offersModel, onDataChange, onModeChange}) {
     this.#pointsListContainer = pointsListContainer;
     this.#destinationsModel = destinationsModel;
@@ -39,15 +35,15 @@ export default class PointPresenter {
       point: this.#point,
       pointDestinations: this.#destinationsModel.getById(point.destination),
       pointOffers: this.#offersModel.getByType(point.type),
-      onEditClick: this.#handleEditClick,
-      onFavoriteClick:  this.#handleFavoriteClick,
+      onEditClick: this.#editClickHandler,
+      onFavoriteClick:  this.#favoriteClickHandler,
     });
 
     this.#pointEditComponent = new PointEditView({
       pointDestinations: this.#destinationsModel.get(),
       pointOffers: this.#offersModel.get(),
-      onFormSubmit: this.#handleFormSubmit,
-      onFormReset: this.#handleFormReset,
+      onFormSubmit: this.#formSubmitHandler,
+      onFormReset: this.#formResetHandler,
     });
 
     if (prevPointComponent === null || prevPointEditComponent === null) {
@@ -102,21 +98,21 @@ export default class PointPresenter {
     }
   };
 
-  #handleEditClick = () => {
+  #editClickHandler = () => {
     this.#replacePointToForm();
   };
 
-  #handleFavoriteClick = () => {
+  #favoriteClickHandler = () => {
     // меняем isFavorite на противоположное значение
     this.#handleDataChange({...this.#point, isFavorite: !this.#point.isFavorite});
   };
 
-  #handleFormSubmit = (point) => {
+  #formSubmitHandler = (point) => {
     this.#handleDataChange(point);
     this.#replaceFormToPoint();
   };
 
-  #handleFormReset = () => {
+  #formResetHandler = () => {
     this.#replaceFormToPoint();
   };
 }

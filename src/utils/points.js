@@ -67,6 +67,40 @@ function isDateAfter(dueDate) {
   return dueDate && dayjs().isBefore(dueDate, 'D');
 }
 
+// Сортировка по дате
+function sortPointsDate(pointA, pointB) {
+  // у dayjs есть метод diff сравнения дат
+  return dayjs(pointA.dateFrom).diff(dayjs(pointB.dateFrom));
+}
+
+function sortPointsTime(pointA, pointB) {
+  const durationA = dayjs(pointA.dateTo).diff(dayjs(pointA.dateFrom));
+  const durationB = dayjs(pointB.dateTo).diff(dayjs(pointB.dateFrom));
+
+  if (durationA > durationB) {
+    return -1;
+  }
+
+  if (durationA < durationB) {
+    return 1;
+  }
+
+  return 0;
+}
+
+function sortPointsPrice(pointA, pointB) {
+  if (pointA.basePrice > pointB.basePrice) {
+    return -1;
+  }
+
+  if (pointA.basePrice < pointB.basePrice) {
+    return 1;
+  }
+
+  // если цены равны
+  return 0;
+}
+
 export {
   formatStringToDateTime,
   formatStringToShortDate,
@@ -76,5 +110,8 @@ export {
   getScheduleDate,
   isDateBefore,
   isDateSame,
-  isDateAfter
+  isDateAfter,
+  sortPointsDate,
+  sortPointsTime,
+  sortPointsPrice
 };
