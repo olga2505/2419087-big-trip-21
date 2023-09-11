@@ -46,7 +46,7 @@ const SortType = {
   EVENT: 'event',
   TIME: 'time',
   PRICE: 'price',
-  OFFER: 'offer'
+  OFFERS: 'offers',
 };
 
 const enableSortType = {
@@ -54,7 +54,6 @@ const enableSortType = {
   [SortType.EVENT]: false,
   [SortType.TIME]: true,
   [SortType.PRICE]: true,
-  [SortType.OFFER]: false,
 };
 
 const Mode = {

@@ -13,18 +13,13 @@ export default class SortView extends AbstractView {
   }
 
   get template() {
-    return createSortTemplate();
+    return createSortTemplate(this.#items);
   }
 
   #sortTypeChangeHandler = (evt) => {
     evt.preventDefault();
-    // // tagName всегда прописными буквами
-    if (evt.target.tagName !== 'INPUT') {
-      return;
-    }
 
-    // ?. optional changing
-    // this.#handleSortTypeChange?.(evt.target.dataset.item);
-    this.#handleSortTypeChange(evt.target.dataset.sortType);
+    // ?. - optional changing
+    this.#handleSortTypeChange?.(evt.target.dataset.sortType);
   };
 }

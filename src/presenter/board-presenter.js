@@ -69,9 +69,6 @@ export default class BoardPresenter {
   }
 
   #sortPoints(sortType) {
-    // this.#currentSortType = sortType;
-    // this.#points = sort[this.#currentSortType](this.points);
-
     // 2. Этот исходный массив задач необходим,
     // потому что для сортировки мы будем мутировать
     // массив в свойстве points
@@ -86,9 +83,10 @@ export default class BoardPresenter {
       case SortType.DAY:
         this.#points.sort(sortPointsDate);
         break;
-      default:
-        this.#points.sort(sortPointsDate);
-
+      case SortType.EVENT:
+        break;
+      case SortType.OFFERS:
+        break;
 
         // Если нужно сохранить исходный массив
         // // 3. А когда пользователь захочет "вернуть всё, как было",
