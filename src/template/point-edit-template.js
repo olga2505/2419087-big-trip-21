@@ -2,7 +2,7 @@ function createPointEditTemplate ({point, pointDestinations, pointOffers}) {
   const {basePrice, dateFrom, dateTo, isFavorite, type} = point;
   // pointDestinations ???
 
-  // получаtт офферы у базового type (Flight). Поиск по массиву объектов по значению
+  // получает офферы у базового type (Flight). Поиск по массиву объектов по значению
   let offers = pointOffers.find(() => point.type === type).offers;
 
 
@@ -108,10 +108,10 @@ function createPointEditTemplate ({point, pointDestinations, pointOffers}) {
             <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
             <div class="event__available-offers">
-              ${offers.map(({ title, price }) => `
+              ${offers.map(({ id, title, price }) => `
               <div class="event__offer-selector">
-                <input class="event__offer-checkbox  visually-hidden" id="event-offer-${title}-1" type="checkbox" name="event-offer-${title}">
-                <label class="event__offer-label" for="event-offer-${title}-1">
+                <input class="event__offer-checkbox  visually-hidden" id="event-offer-${id}" type="checkbox" name="event-offer-${title}">
+                <label class="event__offer-label" for="event-offer-${id}">
                   <span class="event__offer-title">Add ${title}</span>
                   &plus;&euro;&nbsp;
                   <span class="event__offer-price">${price}</span>
