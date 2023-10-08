@@ -1,6 +1,4 @@
 export const createPointEditOffersTemplate = ({point, pointOffers}) => {
-  // console.log(point);
-
   const {type} = point;
   const offers = pointOffers.find(() => point.type === type).offers;
 
@@ -18,7 +16,6 @@ export const createPointEditOffersTemplate = ({point, pointOffers}) => {
             <span class="event__offer-price">${price}</span>
           </label>
         </div>`).join('')}
-
       </div>
     </section>
   `;

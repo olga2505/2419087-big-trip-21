@@ -6,9 +6,43 @@ import {createPointEditControlsTemplate} from './point-edit-event-controls-templ
 import {createPointEditOffersTemplate} from './point-edit-event-offers-template.js';
 import {createPointEditDestinationTemplate} from './point-edit-event-destination-template.js';
 
+function getOffersByType({offers, type}) {
+  return offers
+    .find((offer) => offer.type === type)
+    .offers;
+}
+
+function getDestination({destinations, id}) {
+  return destinations
+    .find((destination) => destination.id === id);
+}
+
+function getDetailsTemplate({point, pointDestinations, pointOffers}) {
+  const currentOffers = getOffersByType({
+    offers: pointOffers,
+    type: point.type
+  });
+
+  const currentDestination = getDestination({
+    destinations: pointDestinations,
+    id: point.destination
+  });
+
+  if (!currentDestination && !currentOffers.length === 0) {
+    return '';
+  }
+
+  return `
+    <section class="event__details">
+      ${(currentOffers.length !== 0) ? createPointEditOffersTemplate({point, pointOffers}) : ''}
+
+      ${(currentDestination) ? createPointEditDestinationTemplate({currentDestination}) : ''}
+    </section>
+  `;
+}
+
 function createPointEditTemplate ({point, pointDestinations, pointOffers}) {
-
-
+  // const {point} = point;
   return (
     `<li class="trip-events__item">
       <form class="event event--edit" action="#" method="post">
@@ -17,19 +51,16 @@ function createPointEditTemplate ({point, pointDestinations, pointOffers}) {
 
           ${createPointEditDestinationsTemplate({point, pointDestinations})}
 
-          ${createPointEditScheduleTemplate()}
+          ${createPointEditScheduleTemplate({point})}
 
-          ${createPointEditPriceTemplate()}
+          ${createPointEditPriceTemplate({point})}
 
           ${createPointEditControlsTemplate()}
         </header>
 
         <section class="event__details">
-          ${createPointEditOffersTemplate({point, pointOffers})}
-
-          ${createPointEditDestinationTemplate()}
+          ${getDetailsTemplate({point, pointDestinations, pointOffers})}
         </section>
-
       </form>
     </li>`
   );
