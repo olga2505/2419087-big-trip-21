@@ -1,4 +1,4 @@
-import {TYPES} from './../const.js';
+import {TYPES} from '../const.js';
 const createPointEditEventTypeTemplate = (point) => `
     <div class="event__type-wrapper">
       <label class="event__type  event__type-btn" for="event-type-toggle-1">

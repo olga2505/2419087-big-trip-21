@@ -1,10 +1,10 @@
-import {createPointEditEventTypeTemplate} from './point-edit-event-type-template.js';
-import {createPointEditDestinationsTemplate} from './point-edit-event-destinations-template.js';
-import {createPointEditScheduleTemplate} from './point-edit-event-schedule-template.js';
-import {createPointEditPriceTemplate} from './point-edit-event-price-template.js';
-import {createPointEditControlsTemplate} from './point-edit-event-controls-template.js';
-import {createPointEditOffersTemplate} from './point-edit-event-offers-template.js';
-import {createPointEditDestinationTemplate} from './point-edit-event-destination-template.js';
+import {createPointEditEventTypeTemplate} from './point-edit-type-template.js';
+import {createPointEditDestinationsTemplate} from './point-edit-destinations-template.js';
+import {createPointEditScheduleTemplate} from './point-edit-schedule-template.js';
+import {createPointEditPriceTemplate} from './point-edit-price-template.js';
+import {createPointEditControlsTemplate} from './point-edit-controls-template.js';
+import {createPointEditOffersTemplate} from './point-edit-offers-template.js';
+import {createPointEditDestinationTemplate} from './point-edit-destination-template.js';
 
 function getOffersByType({offers, type}) {
   return offers
@@ -41,8 +41,8 @@ function getDetailsTemplate({point, pointDestinations, pointOffers}) {
   `;
 }
 
-function createPointEditTemplate ({point, pointDestinations, pointOffers}) {
-  // const {point} = point;
+function createPointEditTemplate ({state, pointDestinations, pointOffers}) {
+  const {point} = state;
   return (
     `<li class="trip-events__item">
       <form class="event event--edit" action="#" method="post">
